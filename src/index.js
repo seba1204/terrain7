@@ -1,46 +1,131 @@
-// import orbit controls
-// import { OrbitControls } from '@/node_modules/three/examples/jsm/controls/OrbitControls';
+// import { OrbitControls } from "https://cdn.skypack.dev/three@0.133.1/examples/jsm/controls/OrbitControls.js";
+let container, stats;
+let camera, scene, renderer;
+let raycaster, pointer;
+let terrain, line;
+const NB_VERTICES = 10;
+const wireframe = false;
 
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-const loader = new THREE.TextureLoader();
 
-const renderer = new THREE.WebGLRenderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
 
-const materials = [
-    new THREE.MeshBasicMaterial({ map: loader.load('https://r105.threejsfundamentals.org/threejs/resources/images/flower-1.jpg') }),
-    new THREE.MeshBasicMaterial({ map: loader.load('https://r105.threejsfundamentals.org/threejs/resources/images/flower-2.jpg') }),
-    new THREE.MeshBasicMaterial({ map: loader.load('https://r105.threejsfundamentals.org/threejs/resources/images/flower-3.jpg') }),
-    new THREE.MeshBasicMaterial({ map: loader.load('https://r105.threejsfundamentals.org/threejs/resources/images/flower-4.jpg') }),
-    new THREE.MeshBasicMaterial({ map: loader.load('https://r105.threejsfundamentals.org/threejs/resources/images/flower-5.jpg') }),
-    new THREE.MeshBasicMaterial({ map: loader.load('https://r105.threejsfundamentals.org/threejs/resources/images/flower-6.jpg') }),
-];
 
-// const controls = new OrbitControls(camera, renderer.domElement);
+function init() {
+    let material, geometry;
+    // set up the camera
+    camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 10);
+    camera.position.z = 1;
 
-const geometry = new THREE.BoxGeometry(1, 1, 1);
-const cube = new THREE.Mesh(geometry, materials);
-scene.add(cube);
+    // set up the terrain material 
+    const loader = new THREE.TextureLoader();
+    material = new THREE.MeshBasicMaterial({ map: loader.load('assets/sand.png'), side: THREE.DoubleSide, wireframe });
 
-const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-scene.add(directionalLight);
+    // create the terrain
+    geometry = new THREE.PlaneBufferGeometry(1, 1, NB_VERTICES, NB_VERTICES);
+    terrain = new THREE.Mesh(geometry, material);
 
-camera.position.set(0, 0, 5);
-// controls.update();
+    // update randomly the terrain
+    updateTerrain(NB_VERTICES, NB_VERTICES);
 
-function animate() {
-    requestAnimationFrame(animate);
+    // create outline for raycaster
+    geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(4 * 3), 3));
+    material = new THREE.LineBasicMaterial({ color: 0xff0000, transparent: true });
+    line = new THREE.Line(geometry, material);
+    line.visible = false;
 
+    // create lights
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+    const light = new THREE.DirectionalLight(0xffffff, 100.0, 5000);
+
+    // set up controls
+    // const controls = new OrbitControls(camera, renderer.domElement);
     // controls.update();
 
 
-    cube.rotation.x += 0.01;
-    cube.rotation.y += 0.01;
+    // set up the scene
+    scene = new THREE.Scene();
+    scene.add(light);
+    scene.add(ambientLight);
+    scene.add(terrain);
+    scene.add(line);
+
+    // set up the raycaster
+    raycaster = new THREE.Raycaster();
+    pointer = new THREE.Vector2();
+
+    // set up renderer and add it to the Web page
+    renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setAnimationLoop(animate);
+    document.body.appendChild(renderer.domElement);
+    document.addEventListener('pointermove', onPointerMove);
+
+}
+
+function onPointerMove(event) {
+
+    pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+    pointer.y = - (event.clientY / window.innerHeight) * 2 + 1;
+
+}
+function render() {
+
+    raycaster.setFromCamera(pointer, camera);
+
+    const intersects = raycaster.intersectObject(terrain);
+
+    if (intersects.length > 0) {
+
+        const intersect = intersects[0];
+        const face = intersect.face;
+
+        const linePosition = line.geometry.attributes.position;
+        const meshPosition = terrain.geometry.attributes.position;
+
+        linePosition.copyAt(0, meshPosition, face.a);
+        linePosition.copyAt(1, meshPosition, face.b);
+        linePosition.copyAt(2, meshPosition, face.c);
+        linePosition.copyAt(3, meshPosition, face.a);
+
+        terrain.updateMatrix();
+
+        line.geometry.applyMatrix4(terrain.matrix);
+
+        line.visible = true;
+
+    } else {
+
+        line.visible = false;
+
+    }
+
+    // rotate the terrain
+    terrain.rotation.z += 0.001;
 
     renderer.render(scene, camera);
-};
+}
+function animate() {
 
-animate();
+    render();
+
+}
+
+function updateTerrain(widthSegments, heightSegments) {
+    terrain.rotation.x = 360;
+    terrain.rotation.z = 100;
+    const totalSegmentsX = widthSegments + 1;
+    const totalSegmentsZ = heightSegments + 1;
+
+    for (let z = 0; z < totalSegmentsZ; z++) {
+        for (let x = 0; x < totalSegmentsX; x++) {
+            const index = 3 * (z * totalSegmentsX + x);
+            terrain.geometry.attributes.position.array[index + 2] = 0.1 * Math.random();
+        }
+    }
+
+    terrain.geometry.attributes.position.needsUpdate = true;
+    terrain.geometry.computeVertexNormals();
+}
+
+init();
