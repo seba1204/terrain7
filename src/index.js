@@ -5,9 +5,7 @@ let raycaster, pointer;
 let terrain, line;
 const NB_VERTICES = 10;
 const wireframe = false;
-
-
-
+const img = "sand";
 
 
 function init() {
@@ -18,7 +16,7 @@ function init() {
 
     // set up the terrain material 
     const loader = new THREE.TextureLoader();
-    material = new THREE.MeshBasicMaterial({ map: loader.load('assets/sand.png'), side: THREE.DoubleSide, wireframe });
+    material = new THREE.MeshBasicMaterial({ map: loader.load('assets/' + img + '.png'), side: THREE.DoubleSide, wireframe });
 
     // create the terrain
     geometry = new THREE.PlaneBufferGeometry(1, 1, NB_VERTICES, NB_VERTICES);
@@ -30,7 +28,7 @@ function init() {
     // create outline for raycaster
     geometry = new THREE.BufferGeometry();
     geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(4 * 3), 3));
-    material = new THREE.LineBasicMaterial({ color: 0xff0000, transparent: true });
+    material = new THREE.LineBasicMaterial({ color: 0xff0000, transparent: true, side: THREE.DoubleSide, });
     line = new THREE.Line(geometry, material);
     line.visible = false;
 
@@ -73,6 +71,9 @@ function render() {
 
     raycaster.setFromCamera(pointer, camera);
 
+    // rotate the terrain
+    terrain.rotation.z += 0.001;
+
     const intersects = raycaster.intersectObject(terrain);
 
     if (intersects.length > 0) {
@@ -100,8 +101,6 @@ function render() {
 
     }
 
-    // rotate the terrain
-    terrain.rotation.z += 0.001;
 
     renderer.render(scene, camera);
 }
