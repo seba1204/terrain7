@@ -1,0 +1,24 @@
+{
+  "name": "land-generator",
+  "version": "0.0.1",
+  "description": "A terrain editor",
+  "main": "src/three.js",
+  "scripts": {
+    "start": "nodemon --exec babel-node src/three.js"
+  },
+  "repository": "https://github.com/seba1204/land-generator.git",
+  "author": "Sébastien PONT <seba12.04@orange.fr>",
+  "license": "GNUV3",
+  "private": true,
+  "dependencies": {
+    "three": "^0.141.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.17.10",
+    "@babel/core": "^7.18.5",
+    "@babel/node": "^7.18.5",
+    "@babel/preset-env": "^7.18.2",
+    "nodemon": "^2.0.16",
+    "three-orbit-controls": "^82.1.0"
+  }
+}
