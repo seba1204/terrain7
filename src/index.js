@@ -3,7 +3,8 @@ let container, stats;
 let camera, scene, renderer;
 let raycaster, pointer;
 let terrain, line;
-const NB_VERTICES = 10;
+let mouvement;
+const NB_VERTICES = 100;
 const wireframe = false;
 const img = "sand";
 
@@ -36,9 +37,6 @@ function init() {
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
     const light = new THREE.DirectionalLight(0xffffff, 100.0, 5000);
 
-    // set up controls
-    // const controls = new OrbitControls(camera, renderer.domElement);
-    // controls.update();
 
 
     // set up the scene
@@ -58,6 +56,38 @@ function init() {
     renderer.setAnimationLoop(animate);
     document.body.appendChild(renderer.domElement);
     document.addEventListener('pointermove', onPointerMove);
+    document.addEventListener('pointermove', onPointerMove);
+
+
+    // set up controls
+    const controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.update();
+
+    mouvement = { "haut": false, "bas": false, "droite": false, "gauche": false };
+
+    document.addEventListener('keydown', function (event) {
+        if (event.keyCode == 68) {
+            mouvement.droite = true;
+        } else if (event.keyCode == 81) {
+            mouvement.gauche = true;
+        } else if (event.keyCode == 90) {
+            mouvement.haut = true;
+        } else if (event.keyCode == 83) {
+            mouvement.bas = true;
+        }
+    });
+
+    document.addEventListener('keyup', function (event) {
+        if (event.keyCode == 68) {
+            mouvement.droite = false;
+        } else if (event.keyCode == 81) {
+            mouvement.gauche = false;
+        } else if (event.keyCode == 90) {
+            mouvement.haut = false;
+        } else if (event.keyCode == 83) {
+            mouvement.bas = false;
+        }
+    });
 
 }
 
@@ -72,7 +102,7 @@ function render() {
     raycaster.setFromCamera(pointer, camera);
 
     // rotate the terrain
-    terrain.rotation.z += 0.001;
+    // terrain.rotation.z += 0.001;
 
     const intersects = raycaster.intersectObject(terrain);
 
@@ -102,6 +132,17 @@ function render() {
     }
 
 
+    if (mouvement.bas) {
+        camera.position.x += 0.01;
+    } else if (mouvement.haut) {
+        camera.position.x -= 0.01;
+    } else if (mouvement.droite) {
+        camera.position.z += 0.01;
+    } else if (mouvement.gauche) {
+        camera.position.z -= 0.01;
+    }
+
+
     renderer.render(scene, camera);
 }
 function animate() {
@@ -119,7 +160,7 @@ function updateTerrain(widthSegments, heightSegments) {
     for (let z = 0; z < totalSegmentsZ; z++) {
         for (let x = 0; x < totalSegmentsX; x++) {
             const index = 3 * (z * totalSegmentsX + x);
-            terrain.geometry.attributes.position.array[index + 2] = 0.1 * Math.random();
+            terrain.geometry.attributes.position.array[index + 2] = 0.01 * Math.random();
         }
     }
 
