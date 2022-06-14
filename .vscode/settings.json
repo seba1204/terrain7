@@ -1,0 +1,8 @@
+{
+    "markdown.extension.toc.omittedFromToc": {
+        // Use a path relative to your workspace.
+        "README.md": [
+            "## Summary",
+        ],
+    }
+}
