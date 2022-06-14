@@ -172,7 +172,7 @@ function updateTerrain(widthSegments, heightSegments) {
     for (let z = 0; z < totalSegmentsZ; z++) {
         for (let x = 0; x < totalSegmentsX; x++) {
             const index = 3 * (z * totalSegmentsX + x);
-            terrain.geometry.attributes.position.array[index + 2] = 1 / NB_VERTICES * Math.random();
+            terrain.geometry.attributes.position.array[index + 2] = 2 / NB_VERTICES * Math.random();
         }
     }
 
