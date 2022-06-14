@@ -4,12 +4,18 @@ let camera, scene, renderer;
 let raycaster, pointer;
 let terrain, line;
 let mouvement;
-const NB_VERTICES = 100;
-const wireframe = false;
+let getImageData;
+
+const strDownloadMime = "image/octet-stream";
+
+const NB_VERTICES = 50;
+const wireframe = true;
 const img = "sand";
 
 
 function init() {
+    getImageData = true;
+
     let material, geometry;
     // set up the camera
     camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 10);
@@ -17,7 +23,8 @@ function init() {
 
     // set up the terrain material 
     const loader = new THREE.TextureLoader();
-    material = new THREE.MeshBasicMaterial({ map: loader.load('assets/' + img + '.png'), side: THREE.DoubleSide, wireframe });
+    material = new THREE.MeshBasicMaterial({ color: 0x1843B1, side: THREE.DoubleSide, wireframe });
+    // material = new THREE.MeshBasicMaterial({ color: 0x1843B1, map: loader.load('assets/' + img + '.png'), side: THREE.DoubleSide, wireframe });
 
     // create the terrain
     geometry = new THREE.PlaneBufferGeometry(1, 1, NB_VERTICES, NB_VERTICES);
@@ -51,7 +58,7 @@ function init() {
     pointer = new THREE.Vector2();
 
     // set up renderer and add it to the Web page
-    renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setAnimationLoop(animate);
     document.body.appendChild(renderer.domElement);
@@ -144,6 +151,11 @@ function render() {
 
 
     renderer.render(scene, camera);
+
+    if (getImageData) {
+        getImageData = false;
+        saveAsImage();
+    }
 }
 function animate() {
 
@@ -160,12 +172,40 @@ function updateTerrain(widthSegments, heightSegments) {
     for (let z = 0; z < totalSegmentsZ; z++) {
         for (let x = 0; x < totalSegmentsX; x++) {
             const index = 3 * (z * totalSegmentsX + x);
-            terrain.geometry.attributes.position.array[index + 2] = 0.01 * Math.random();
+            terrain.geometry.attributes.position.array[index + 2] = 1 / NB_VERTICES * Math.random();
         }
     }
 
     terrain.geometry.attributes.position.needsUpdate = true;
     terrain.geometry.computeVertexNormals();
 }
+function saveAsImage() {
+    var imgData;
+
+    try {
+        var strMime = "image/png";
+        imgData = renderer.domElement.toDataURL(strMime);
+
+        saveFile(imgData.replace(strMime, strDownloadMime), "test.png");
+
+    } catch (e) {
+        console.log(e);
+        return;
+    }
+
+}
+
+var saveFile = function (strData, filename) {
+    var link = document.createElement('a');
+    if (typeof link.download === 'string') {
+        document.body.appendChild(link); //Firefox requires the link to be in the body
+        link.download = filename;
+        link.href = strData;
+        link.click();
+        document.body.removeChild(link); //remove the link when done
+    } else {
+        location.replace(uri);
+    }
+};
 
 init();

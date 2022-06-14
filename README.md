@@ -1,12 +1,23 @@
-# Land generator
+# terrain7
+
+<p align="center">
+  <img src="docs/assets/logo/logo-with-text-x0.1.png" />
+</p>
 
 A three-js terrain editor.
 
 ## Summary
 
-- [Land generator](#land-generator)
+- [terrain7](#terrain7)
   - [Summary](#summary)
+  - [Screenshots](#screenshots)
   - [Context](#context)
+
+## Screenshots
+
+<p align="center">
+  <img src="docs/assets/screenshots/screenshot-22-06-14.png" />
+</p>
 
 ## Context
 
