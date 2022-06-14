@@ -14,7 +14,7 @@ const img = "sand";
 
 
 function init() {
-    getImageData = true;
+    getImageData = false;
 
     let material, geometry;
     // set up the camera
