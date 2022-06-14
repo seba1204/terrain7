@@ -1,14 +1,10 @@
-# terrain7
-
-<p align="center">
-  <img src="docs/assets/logo/logo-with-text-x0.1.png" />
-</p>
+# ![logo](docs/assets/logo/banner.png)
 
 A three-js terrain editor.
 
 ## Summary
 
-- [terrain7](#terrain7)
+- [!logo](#)
   - [Summary](#summary)
   - [Screenshots](#screenshots)
   - [Context](#context)
