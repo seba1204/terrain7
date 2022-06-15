@@ -13,7 +13,7 @@ function MyRotatingBox() {
         for (let z = 0; z < 51; z++) {
             for (let x = 0; x < 51; x++) {
                 const index = 3 * (z * 51 + x);
-                terrain.current.attributes.position.array[index + 2] = 5 / NB_VERTICES * Math.random();
+                terrain.current.attributes.position.array[index + 2] = 6 / NB_VERTICES * Math.random();
             }
         }
         terrain.current.attributes.position.needsUpdate = true;
