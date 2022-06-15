@@ -1,16 +1,8 @@
-import React from "react";
-import ReactDOM from "react-dom";
-// const unused = "something";
-const App = () => (
-    <h1>
-        My React and TypeScript App!!{" "}
-        {new Date().toLocaleDateString()}
-    </h1>
-);
+/* eslint-disable  @typescript-eslint/no-non-null-assertion */
+import { createRoot } from 'react-dom/client'
+import App from './App'
+import './styles.css'
 
-ReactDOM.render(
-    <React.StrictMode>
-        <App />
-    </React.StrictMode>,
-    document.getElementById("root")
-);
+createRoot(document.getElementById('root')!).render(
+    App()
+)
