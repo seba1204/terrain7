@@ -1,12 +1,13 @@
+import { useTexture } from "@react-three/drei";
 import React, { useRef } from "react";
-import { useFrame } from "react-three-fiber";
-
+import texture from '../../../assets/textures/freeTexture1.png';
 import { noise } from "./perlin";
-
 const Terrain = () => {
+    const props = useTexture({
+        map: texture,
+    });
     const mesh = useRef();
     const didUpdate = (ref) => {
-        console.log(ref);
         noise.seed(Math.random());
         let pos = ref.geometry.getAttribute("position");
         let pa = pos.array;
@@ -29,19 +30,20 @@ const Terrain = () => {
     };
 
     // Raf loop
-    useFrame(() => {
-        mesh.current.rotation.z += 0.001;
-    });
+    // useFrame(() => {
+    //     mesh.current.rotation.z += 0.001;
+    // });
 
     return (
-        <mesh ref={mesh} rotation={[-Math.PI / 3, 0, Math.PI / 10]} onUpdate={didUpdate} >
+        <mesh ref={mesh}
+            rotation={[-Math.PI / 3, 0, Math.PI / 10]}
+            onUpdate={didUpdate}
+            onPointerDown={console.log}
+        >
             <planeBufferGeometry attach="geometry" args={[25, 25, 75, 75]} />
             <meshPhongMaterial
                 attach="material"
-                color={0x3498db}
-                specular={0x3498db}
-                shininess={3}
-                flatShading
+                {...props}
             />
         </mesh>
     );
