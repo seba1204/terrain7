@@ -5,7 +5,6 @@ import Terrain from './Terrain';
 import Tree from './Tree';
 
 
-
 const Scene = () => {
 
     return (
