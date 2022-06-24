@@ -36,6 +36,14 @@ const config: Configuration = {
                 test: /\.css$/i,
                 use: ["style-loader", "css-loader"],
             },
+            {
+                test: /\.(png|svg|jpg|jpeg|gif)$/i,
+                type: 'asset/resource',
+            },
+            {
+                test: /\.(fbx|gltf)$/i,
+                use: 'file-loader',
+            },
         ],
     },
     resolve: {
