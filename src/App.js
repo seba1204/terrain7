@@ -4,13 +4,15 @@ import Controls from "./components/Controls";
 import Scene from "./components/Scene";
 
 const App = () => {
+
+
     return (
-        <Canvas camera={{ zoom: 30, position: [0, 0, 500] }}>
+        <Canvas camera={{ zoom: 30, position: [0, 0, 500] }} gl={{ antialias: true, preserveDrawingBuffer: true }}>
             <Suspense>
                 <Controls />
                 <Scene />
             </Suspense>
-        </Canvas>
+        </Canvas >
     );
 };
 
