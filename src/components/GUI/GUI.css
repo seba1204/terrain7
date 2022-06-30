@@ -1,0 +1,18 @@
+.gui {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    min-width: 200px;
+    border-right: 2px dotted #2980b9;
+}
+
+.enabled {
+    background-color: #8e44ad;
+}
+
+.tools {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+}

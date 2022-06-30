@@ -1,0 +1,25 @@
+.Pane {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-bottom: 10px;
+}
+
+.Pane-header {
+    background-color: #2980b9;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    padding: 10px;
+}
+
+.Pane-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.Pane-content {
+    padding: 10px 5px 0px 5px;
+}
