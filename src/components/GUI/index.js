@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import * as Icon from 'react-feather';
 
+import CheckBox from './CheckBox';
 import Pane from './Pane';
 import PictureButton from './PictureButton';
 import Slider from './Slider';
 
 import './GUI.css';
 
-const GUI = () => {
+const GUI = ({ onBrushSizeChange, onBrushIntensityChange, onTerrainChange, onWireFrame, wireFrame }) => {
     const [state, setState] = useState({
         currentTool: 0
     });
@@ -42,12 +43,16 @@ const GUI = () => {
             </Pane>
 
             <Pane icon={<Icon.Edit2 />} title="Sculpter">
-                <Slider name="Taille" />
-                <Slider name="Intensité" />
+                <Slider name="Taille" onChange={onBrushSizeChange} />
+                <Slider name="Intensité" onChange={onBrushIntensityChange} defaultValue={20} />
             </Pane>
             <Pane icon={<Icon.Layers />} title="Texturer">
                 <Slider name="Taille" />
                 <Slider name="Intensité" />
+            </Pane>
+            <Pane icon={<Icon.Settings />} title="Paramètres" >
+                <Slider name="Taille" onChange={onTerrainChange} />
+                <CheckBox name="Wireframe" onChange={onWireFrame} checked={wireFrame} />
             </Pane>
         </div>
     );

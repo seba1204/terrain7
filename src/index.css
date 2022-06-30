@@ -29,3 +29,7 @@ canvas,
     padding: 10px;
     transform: translate3d(-50%, -50%, 0);
 } */
+
+.cursor-grabbing {
+    /* cursor: none; */
+}

@@ -3,8 +3,8 @@ import RSlider from 'react-input-slider';
 
 import './Slider.css';
 
-const Slider = ({ name, onChange }) => {
-    const [state, setState] = useState({ x: 10 });
+const Slider = ({ name, onChange, defaultValue }) => {
+    const [state, setState] = useState({ x: defaultValue ? defaultValue : 10 });
 
     const handleChange = ({ x }) => {
         setState({ x });

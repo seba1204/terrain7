@@ -2,16 +2,15 @@
 import React from "react";
 import Lights from './Lights';
 import Terrain from './Terrain';
-import Tree from './Tree';
 
 
-const Scene = () => {
+const Scene = ({ brushSize, brushIntensity, terrainSize, wireFrame }) => {
 
     return (
         <>
             <Lights />
-            <Terrain />
-            <Tree position={[10, 0, 0]} />
+            <Terrain brushSize={brushSize} brushIntensity={brushIntensity} terrainSize={terrainSize} wireFrame={wireFrame} />
+            {/* <Tree position={[10, 0, 0]} /> */}
         </>
     );
 };

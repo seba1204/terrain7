@@ -1,0 +1,12 @@
+.CheckBox {
+    display: flex;
+    margin-top: 10px;
+    flex-direction: row;
+
+}
+
+
+
+.CheckBox-name {
+    margin-right: 5px;
+}

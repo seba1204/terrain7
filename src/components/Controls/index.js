@@ -27,11 +27,9 @@ const Controls = () => {
         }
     };
 
-    const onSaveImage = (e) => {
+    const onSaveImage = () => {
         const strMime = "image/png";
         const imgData = domElement.toDataURL(strMime);
-        console.log("🚀 ~ file: index.js ~ line 75 ~ window.addEventListener ~ imgData", e);
-        console.log(domElement);
         saveFile(imgData.replace(strMime, strDownloadMime), "test.png");
     };
     useEffect(() => {
