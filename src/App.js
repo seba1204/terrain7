@@ -10,6 +10,7 @@ const App = () => {
     const [brushIntensity, setbrushIntensity] = useState(20);
     const [terrainSize, setTerrainSize] = useState(50);
     const [wireFrame, setWireFrame] = useState(true);
+    const [currentTool, setCurrentTool] = useState(0);
     const handleBrushSizeChange = (e) => {
         setBrushSize(e);
     };
@@ -22,6 +23,8 @@ const App = () => {
                         onBrushIntensityChange={setbrushIntensity}
                         onTerrainChange={setTerrainSize}
                         onWireFrame={setWireFrame}
+                        onCurrentToolChange={setCurrentTool}
+                        currentTool={currentTool}
                         wireFrame={wireFrame}
                     />
                 </div>
@@ -29,7 +32,7 @@ const App = () => {
                     <Canvas camera={{ zoom: 30, position: [0, 0, 500] }} gl={{ antialias: true, preserveDrawingBuffer: true }}>
                         <Suspense>
                             <Controls />
-                            <Scene brushSize={brushSize} brushIntensity={brushIntensity} terrainSize={terrainSize} wireFrame={wireFrame} />
+                            <Scene brushSize={brushSize} brushIntensity={brushIntensity} terrainSize={terrainSize} wireFrame={wireFrame} currentTool={currentTool} />
                         </Suspense>
                     </Canvas >
                 </div>

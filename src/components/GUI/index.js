@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import * as Icon from 'react-feather';
 
 import CheckBox from './CheckBox';
@@ -8,19 +8,8 @@ import Slider from './Slider';
 
 import './GUI.css';
 
-const GUI = ({ onBrushSizeChange, onBrushIntensityChange, onTerrainChange, onWireFrame, wireFrame }) => {
-    const [state, setState] = useState({
-        currentTool: 0
-    });
-    const enableSculpt = () => {
-        setState({ currentTool: 0 });
-    };
-    const enableTexture = () => {
-        setState({ currentTool: 1 });
-    };
-    const enableMove = () => {
-        setState({ currentTool: 2 });
-    };
+const GUI = ({ onBrushSizeChange, onBrushIntensityChange, onTerrainChange, onWireFrame, wireFrame, onCurrentToolChange, currentTool }) => {
+
 
     return (
         <div className='gui'>
@@ -29,16 +18,16 @@ const GUI = ({ onBrushSizeChange, onBrushIntensityChange, onTerrainChange, onWir
                 <div className="tools">
                     <PictureButton
                         image={<Icon.Edit2 />}
-                        onClick={enableSculpt}
-                        enabled={state.currentTool === 0} />
+                        onClick={() => onCurrentToolChange(0)}
+                        enabled={currentTool === 0} />
                     <PictureButton
                         image={<Icon.Layers />}
-                        onClick={enableTexture}
-                        enabled={state.currentTool === 1} />
+                        onClick={() => onCurrentToolChange(1)}
+                        enabled={currentTool === 1} />
                     <PictureButton
                         image={<Icon.Move />}
-                        onClick={enableMove}
-                        enabled={state.currentTool === 2} />
+                        onClick={() => onCurrentToolChange(2)}
+                        enabled={currentTool === 2} />
                 </div>
             </Pane>
 
