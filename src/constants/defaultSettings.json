@@ -4,7 +4,7 @@
     "textureSize": 10,
     "paintIntensity": 20,
     "textureIntensity": 50,
-    "terrainSize": 90,
+    "terrainSize": 1,
     "wireFrame": true,
     "currentTool": "SCULPTURE",
     "showStats": true
