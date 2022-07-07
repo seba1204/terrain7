@@ -1,23 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import RSlider from 'react-input-slider';
 
 import './Slider.css';
 
-const Slider = ({ name, onChange, defaultValue }) => {
-    const [state, setState] = useState({ x: defaultValue ? defaultValue : 10 });
-
-    const handleChange = ({ x }) => {
-        setState({ x });
-        onChange(x);
-    };
+const Slider = ({ name, onChange, value }) => {
 
     return (
         <div className='Silder'>
             <div className='Slider-name'>{name + " :"}</div>
             <RSlider
                 axis="x"
-                x={state.x}
-                onChange={handleChange}
+                x={value}
+                onChange={({ x }) => onChange(x)}
                 styles={{
                     active: {
                         backgroundColor: '#8e44ad'

@@ -1,0 +1,11 @@
+{
+    "sculptSize": 10,
+    "sculptIntensity": 20,
+    "textureSize": 10,
+    "paintIntensity": 20,
+    "textureIntensity": 50,
+    "terrainSize": 90,
+    "wireFrame": true,
+    "currentTool": "SCULPTURE",
+    "showStats": true
+}

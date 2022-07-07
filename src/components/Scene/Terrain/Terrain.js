@@ -25,7 +25,7 @@ const Terrain = (props) => {
         const meshPosition = mesh.current.geometry.attributes.position;
         const linePosition = line.current.geometry.attributes.position;
         const { face, shiftKey, nativeEvent } = e;
-
+        console.log(mesh.current.geometry);
         let vertices = [
             face.a,
             face.b,
@@ -193,13 +193,15 @@ void main()
             >
                 <planeBufferGeometry attach="geometry" args={[25, 25, NB_VERTICES, NB_VERTICES]} />
 
-                {wireFrame ?
+                {wireFrame
+                    ?
                     <meshPhongMaterial
                         attach="material"
                         side={THREE.DoubleSide}
                         wireframe={true}
                         color={0xffffff}
-                    /> : <shaderMaterial attach="material" {...data} />}
+                    />
+                    : <shaderMaterial attach="material" {...data} />}
 
             </mesh>
 
