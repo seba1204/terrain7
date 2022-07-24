@@ -1,6 +1,5 @@
 // import { useTexture } from "@react-three/drei";
-import np from "numjs";
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import * as THREE from "three";
 // import dirt from '../../../assets/textures/dirt-512.jpg';
 // import grass from '../../../assets/textures/grass-512.jpg';
@@ -14,18 +13,12 @@ import { toolsName } from '../../../constants/tools';
 const Terrain = (props) => {
     const { currentTool, terrainSize } = props;
     const NB_VERTICES = terrainSize;
-
     const colores = {
         grass: new THREE.Color(0x2ecc71),
         dirt: new THREE.Color(0x9b59b6),
         sand: new THREE.Color(0xf1c40f),
         rock: new THREE.Color(0xe74c3c),
         snow: new THREE.Color(0xecf0f1),
-        // turq: new THREE.Color(0x1abc9c),
-        // blue: new THREE.Color(0x3498db),
-        // orange: new THREE.Color(0xe67e22),
-        // pink: new THREE.Color(0xec407a),
-        // brown: new THREE.Color(0x8d6e63),
 
     };
     const mesh = useRef();
@@ -33,6 +26,7 @@ const Terrain = (props) => {
     const cls = useRef();
     const isCklicked = useRef(false);
     const isIn = useRef(false);
+
 
     const onPointerHover = (e) => {
         const meshPosition = mesh.current.geometry.attributes.position;
@@ -89,7 +83,6 @@ const Terrain = (props) => {
             line.current.geometry.applyMatrix4(mesh.current.matrix);
             line.current.visible = true;
             mesh.current.geometry.groupNeedsUpdate = true;
-            console.log(distances);
         }
     };
     const getCube = () => {
@@ -132,31 +125,31 @@ const Terrain = (props) => {
     const cube = getCube();
 
 
-    useEffect(() => {
-        const computeDist = () => {
-            const geometry = mesh.current.geometry;
-            const count = geometry.attributes.position.count;
-            const a = np.zeros([count / 3, count / 3]);
+    // useEffect(() => {
+    //     const computeDist = () => {
+    //         const geometry = mesh.current.geometry;
+    //         const count = geometry.attributes.position.count;
+    //         const a = np.zeros([count / 3, count / 3]);
 
-            const positions = geometry.attributes.position.array;
-            for (let i = 0; i < count; i += 3) {
-                for (let j = 0; j < count; j += 3) {
-                    const xi = positions[i];
-                    const yi = positions[i + 1];
-                    const zi = positions[i + 2];
-                    const xj = positions[j];
-                    const yj = positions[j + 1];
-                    const zj = positions[j + 2];
-                    const dist = Math.sqrt((xi - xj) ** 2 + (yi - yj) ** 2 + (zi - zj) ** 2);
-                    a.set(i / 3, j / 3, dist);
-                }
-            }
-            return a;
-        };
+    //         const positions = geometry.attributes.position.array;
+    //         for (let i = 0; i < count; i += 3) {
+    //             for (let j = 0; j < count; j += 3) {
+    //                 const xi = positions[i];
+    //                 const yi = positions[i + 1];
+    //                 const zi = positions[i + 2];
+    //                 const xj = positions[j];
+    //                 const yj = positions[j + 1];
+    //                 const zj = positions[j + 2];
+    //                 const dist = Math.sqrt((xi - xj) ** 2 + (yi - yj) ** 2 + (zi - zj) ** 2);
+    //                 a.set(i / 3, j / 3, dist);
+    //             }
+    //         }
+    //         return a;
+    //     };
 
-        const distances = computeDist();
-        console.log("" + distances);
-    }, []);
+    //     const distances = computeDist();
+    //     console.log("" + distances);
+    // }, []);
 
 
     return (

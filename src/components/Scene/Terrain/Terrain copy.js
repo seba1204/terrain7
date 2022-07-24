@@ -18,6 +18,11 @@ const Terrain = () => {
         sand: new THREE.Color(0xf1c40f),
         rock: new THREE.Color(0xe74c3c),
         snow: new THREE.Color(0xecf0f1),
+        // turq: new THREE.Color(0x1abc9c),
+        // blue: new THREE.Color(0x3498db),
+        // orange: new THREE.Color(0xe67e22),
+        // pink: new THREE.Color(0xec407a),
+        // brown: new THREE.Color(0x8d6e63),
     };
     const getCube = () => {
         const geometry = new THREE.PlaneGeometry(25, 25, NB_VERTICES, NB_VERTICES).toNonIndexed();

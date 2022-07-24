@@ -1,12 +1,12 @@
 import { extend, useFrame, useThree } from "@react-three/fiber";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
+import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 extend({ OrbitControls });
 
 
-const Controls = () => {
+const Controls = ({ keys, buttons }) => {
     // boolean state variable to enable/disable the orbit controls
-    const [enabled, setEnabled] = useState(false);
     const {
         camera,
         gl: { domElement }
@@ -30,21 +30,9 @@ const Controls = () => {
     const onSaveImage = () => {
         const strMime = "image/png";
         const imgData = domElement.toDataURL(strMime);
-        saveFile(imgData.replace(strMime, strDownloadMime), "test.png");
+        saveFile(imgData.replace(strMime, strDownloadMime), "screenshot.png");
     };
     useEffect(() => {
-        window.addEventListener("keydown", (e) => {
-            if (e.key === "r") {
-                // change enabled variable
-                setEnabled(true);
-            }
-        });
-        window.addEventListener("keyup", (e) => {
-            if (e.key === "r") {
-                // change enabled variable
-                setEnabled(false);
-            }
-        });
         window.addEventListener("keypress", (e) => {
             if (e.key === "k") {
                 onSaveImage(e);
@@ -52,17 +40,27 @@ const Controls = () => {
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+
     return (
         <orbitControls
             ref={controls}
             args={[camera, domElement]}
-            enableZoom={false}
-            enableRotate={enabled}
-            enablePan={enabled}
+            enableZoom={true}
+            enableRotate={buttons.includes(4)}
+            enablePan={keys.includes(16) && buttons.includes(4)}
             maxAzimuthAngle={Math.PI / 4}
             maxPolarAngle={Math.PI}
             minAzimuthAngle={-Math.PI / 4}
             minPolarAngle={0}
+            mouseButtons={
+                {
+                    LEFT: '',
+                    MIDDLE: THREE.MOUSE.ROTATE,
+                    RIGHT: '',
+                }
+            }
+            panSpeed={0.05}
         />
     );
 
