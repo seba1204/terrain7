@@ -1,34 +1,31 @@
-import * as THREE from 'three';
 
 const textureColors = {
-    grass: new THREE.Color(0x2ecc71),
-    dirt: new THREE.Color(0x9b59b6),
-    sand: new THREE.Color(0xf1c40f),
-    rock: new THREE.Color(0xe74c3c),
-    snow: new THREE.Color(0xecf0f1),
+    grass: 0x2ecc71,
+    dirt: 0x9b59b6,
+    sand: 0xf1c40f,
+    rock: 0xe74c3c,
+    snow: 0xecf0f1,
 };
 
 const flatColors = {
-    turquoise: new THREE.Color(0x1abc9c),
-    greenSea: new THREE.Color(0x16a085),
-    emerald: new THREE.Color(0x2ecc71),
-    nephritis: new THREE.Color(0x27ae60),
-    peterRiver: new THREE.Color(0x3498db),
-    belizeHole: new THREE.Color(0x2980b9),
-    amethyst: new THREE.Color(0x9b59b6),
-    wisteria: new THREE.Color(0x8e44ad),
-    wetAsphalt: new THREE.Color(0x34495e),
-    midnightBlue: new THREE.Color(0x2c3e50),
-    sunflower: new THREE.Color(0xf1c40f),
-    orange: new THREE.Color(0xe67e22),
-    carrot: new THREE.Color(0xe67e22),
-    pumpkin: new THREE.Color(0xd35400),
-    alizarin: new THREE.Color(0xe74c3c),
-    pomegranate: new THREE.Color(0xc0392b),
-    clouds: new THREE.Color(0xecf0f1),
-    silver: new THREE.Color(0xbdc3c7),
-    concrete: new THREE.Color(0x95a5a6),
-    asbestos: new THREE.Color(0x7f8c8d)
+    turquoise: 0x1abc9c,
+    greenSea: 0x16a085,
+    emerald: 0x2ecc71,
+    nephritis: 0x27ae60,
+    peterRiver: 0x3498db,
+    belizeHole: 0x2980b9,
+    amethyst: 0x9b59b6,
+    wisteria: 0x8e44ad,
+    wetAsphalt: 0x34495e,
+    midnightBlue: 0x2c3e50,
+    sunflower: 0xf1c40f,
+    carrot: 0xe67e22,
+    pumpkin: 0xd35400,
+    alizarin: 0xe74c3c,
+    pomegranate: 0xc0392b,
+    clouds: 0xecf0f1,
+    silver: 0xbdc3c7,
+    concrete: 0x95a5a6,
+    asbestos: 0x7f8c8
 };
-
 export { flatColors, textureColors };

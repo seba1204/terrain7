@@ -1,7 +1,8 @@
 // import { useTexture } from "@react-three/drei";
 import React, { useRef } from "react";
-import { flatColors } from "../../../constants/colors";
 import { coloredPlane, getNearestVertex } from './helpers';
+
+import { flatColors } from "../../../constants/colors";
 
 const Terrain = (props) => {
     const { terrainSize } = props;
@@ -24,8 +25,7 @@ const Terrain = (props) => {
         console.log(`x: ${nV.x}, y: ${nV.y}, z: ${nV.z}`);
     };
 
-
-    const plane = coloredPlane(NB_VERTICES);
+    const plane = coloredPlane(NB_VERTICES, 20);
 
     return (
         <group>
@@ -36,7 +36,7 @@ const Terrain = (props) => {
                 object={plane}
             />
 
-            <mesh ref={cls} visible={true}>
+            <mesh ref={cls}>
                 <sphereBufferGeometry args={[0.3]} />
                 <meshBasicMaterial attach="material" color={flatColors.alizarin} />
             </mesh>

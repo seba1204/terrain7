@@ -7,57 +7,57 @@ import { flatColors } from '../../../../constants/colors';
  * @param {int} nbVert 
  * @returns 
  */
-const generateColoredPlane = () => {
+const generateColoredPlane = (nbCote, size) => {
 
-    const rowNb = 1;
-    const colNb = 1;
 
-    const width = 10;
-    const height = 10;
+    const rowNb = nbCote;
+    const colNb = nbCote;
 
-    // const vertexCount = rowNb * colNb * 2 * 3;
+    const width = size;
+    const height = size;
+
+    const vertexCount = rowNb * colNb * 2 * 3;
 
     const geometry = new THREE.BufferGeometry();
 
     const positions = [];
     const colors = [];
 
-    let color;
-    let xOffset = 0;
-    let yOffset = 0;
-    for (let i = 0; i < rowNb * colNb; i++) {
+    let color, x, y;
 
-        color = getColor(flatColors, 'random');
 
-        // 2 triangle per square
-        for (let k = 0; k < 2; k++) {
 
-            // 3 vertices per triangle
-            for (let j = 0; j < 3; j++) {
-                if (j <= 1) {
-                    xOffset = j;
-                    yOffset = 0;
-                } else {
-                    xOffset = k;
-                    yOffset = 1;
+    const coef = [
+        [
+            [0, 1, 0],
+            [0, 0, 1]
+        ],
+        [
+            [1, 1, 0],
+            [0, 1, 1]
+        ]
+    ];
+
+    for (let row = 0; row < rowNb; row++) {
+        for (let col = 0; col < colNb; col++) {
+            color = new THREE.Color(getColor(flatColors, 'wetAsphalt'));
+            for (let parity = 0; parity < 2; parity++) {
+                for (let vertNb = 0; vertNb < 3; vertNb++) {
+                    x = row + coef[parity][0][vertNb];
+                    y = col + coef[parity][1][vertNb];
+
+                    positions.push(width / rowNb * x);
+                    positions.push(height / colNb * y);
+                    positions.push(0);
+                    colors.push(color.r * 255);
+                    colors.push(color.g * 255);
+                    colors.push(color.b * 255);
+
                 }
-                // adding x
-                positions.push(width / rowNb * (i % rowNb + xOffset));
-                // adding y
-                positions.push(height / colNb * (i % (rowNb) + yOffset));
-                // adding z
-                positions.push(0);
-
-                // adding r,g,b
-                colors.push(color.r * 255);
-                colors.push(color.g * 255);
-                colors.push(color.b * 255);
-
             }
+
         }
-
     }
-
     const positionAttribute = new THREE.Float32BufferAttribute(positions, 3);
     const colorAttribute = new THREE.Uint8BufferAttribute(colors, 3);
 
@@ -71,12 +71,12 @@ const generateColoredPlane = () => {
         vertexColors: true,
         side: THREE.DoubleSide,
     });
-    geometry.setDrawRange(0, 4 * 3 * 2);
+    geometry.setDrawRange(0, vertexCount);
     const mesh = new THREE.Mesh(geometry, material);
 
     // display wireframe over the plane
     const wireframeMaterial = new THREE.MeshBasicMaterial({
-        color: flatColors.pomegranate,
+        color: flatColors.clouds,
         wireframe: true,
         transparent: true
     });
