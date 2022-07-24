@@ -5,7 +5,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 extend({ OrbitControls });
 
 
-const Controls = ({ keys, buttons }) => {
+const Controls = () => {
     // boolean state variable to enable/disable the orbit controls
     const {
         camera,
@@ -47,8 +47,8 @@ const Controls = ({ keys, buttons }) => {
             ref={controls}
             args={[camera, domElement]}
             enableZoom={true}
-            enableRotate={buttons.includes(4)}
-            enablePan={keys.includes(16) && buttons.includes(4)}
+            enableRotate={true}
+            enablePan={false}
             maxAzimuthAngle={Math.PI / 4}
             maxPolarAngle={Math.PI}
             minAzimuthAngle={-Math.PI / 4}

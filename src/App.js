@@ -1,5 +1,5 @@
 import { Canvas } from "@react-three/fiber";
-import React, { Suspense, useCallback, useEffect, useState } from "react";
+import React, { Suspense, useState } from "react";
 import './App.css';
 import Controls from "./components/Controls";
 import GUI from "./components/GUI";
@@ -9,39 +9,10 @@ import defaultSettings from "./constants/defaultSettings.json";
 
 const App = () => {
     const [settings, setSettings] = useState(defaultSettings);
-    const [keys, setKeys] = useState([]);
-    const [buttons, setButtons] = useState([]);
 
     const updateSettings = (newSettings) => {
         setSettings({ ...settings, ...newSettings });
     };
-
-    const addKey = useCallback((e) => {
-        if (e.repeat) return;
-        setKeys(prevKeys => [...prevKeys, e.keyCode]);
-    }, []);
-
-    const removeKey = useCallback((e) => {
-        setKeys(prevKeys => prevKeys.filter((key) => key !== e.keyCode));
-    }, []);
-
-    const addButton = useCallback((e) => {
-        if (e.repeat) return;
-        setButtons(prevButtons => [...prevButtons, e.buttons]);
-    }, []);
-
-    const removeButton = useCallback((e) => {
-        if (e.repeat) return;
-        setButtons(prevButtons => prevButtons.filter((b) => b !== e.buttons));
-    }, []);
-
-
-    useEffect(() => {
-        window.addEventListener("keydown", addKey);
-        window.addEventListener("keyup", removeKey);
-        window.addEventListener("mousedown", addButton);
-        window.addEventListener("mouseup", removeButton);
-    });
 
     return (
         <div className="container">
@@ -53,10 +24,11 @@ const App = () => {
                     />
                 </div>
                 <div className="content panel">
-                    <Canvas camera={{ zoom: 30, position: [0, 0, 500] }} gl={{ antialias: true, preserveDrawingBuffer: true }}>
+                    {/* enable preserveDrawingBuffer for screenshot */}
+                    <Canvas camera={{ zoom: 30, position: [0, 0, 500] }} gl={{ antialias: true, preserveDrawingBuffer: false }}>
                         <Suspense>
-                            <Controls keys={keys} buttons={buttons} />
-                            <Scene keys={keys} {...settings} />
+                            <Controls />
+                            <Scene {...settings} />
                         </Suspense>
                     </Canvas >
                 </div>

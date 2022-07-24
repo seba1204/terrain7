@@ -1,3 +1,4 @@
 import coloredPlane from './coloredPlane';
+import getNearestVertex from './getNearestVertex';
 
-export { coloredPlane };
+export { coloredPlane, getNearestVertex };
