@@ -1,29 +1,15 @@
 // import { useTexture } from "@react-three/drei";
 import React, { useRef } from "react";
 import * as THREE from "three";
-// import dirt from '../../../assets/textures/dirt-512.jpg';
-// import grass from '../../../assets/textures/grass-512.jpg';
-// import heightmap from '../../../assets/textures/heightmap.png';
-// import rock from '../../../assets/textures/rock-512.jpg';
-// import sand from '../../../assets/textures/sand-512.jpg';
-// import snow from '../../../assets/textures/snow-512.jpg';
-
 import { toolsName } from '../../../constants/tools';
+import { coloredPlane } from './helpers';
 
 const Terrain = (props) => {
     const { currentTool, terrainSize } = props;
     const NB_VERTICES = terrainSize;
-    const colores = {
-        grass: new THREE.Color(0x2ecc71),
-        dirt: new THREE.Color(0x9b59b6),
-        sand: new THREE.Color(0xf1c40f),
-        rock: new THREE.Color(0xe74c3c),
-        snow: new THREE.Color(0xecf0f1),
 
-    };
     const mesh = useRef();
     const line = useRef();
-    const cls = useRef();
     const isCklicked = useRef(false);
     const isIn = useRef(false);
 
@@ -72,7 +58,6 @@ const Terrain = (props) => {
             tempVertex.setX(meshPosition.array[ind * 3]);
             tempVertex.setY(meshPosition.array[ind * 3 + 1]);
             tempVertex.setZ(meshPosition.array[ind * 3 + 2]);
-            cls.current.position.copy(mesh.current.localToWorld(tempVertex));
 
 
             linePosition.copyAt(0, meshPosition, 1);
@@ -85,36 +70,8 @@ const Terrain = (props) => {
             mesh.current.geometry.groupNeedsUpdate = true;
         }
     };
-    const getCube = () => {
-        const geometry = new THREE.PlaneGeometry(25, 25, NB_VERTICES, NB_VERTICES).toNonIndexed();
-        let color = new THREE.Color();
-        const count = geometry.attributes.position.count;
-        geometry.setAttribute('color', new THREE.BufferAttribute(new Float32Array(count * 3), 3));
-        const colors = geometry.attributes.color;
-        for (let i = 0; i <= count; i += 3) {
-            // color = colores.grass;
-            // get random color from colores
-            const keys = Object.keys(colores);
-            const random = Math.floor(Math.random() * keys.length);
-            color = colores[keys[random]];
 
-            colors.setXYZ(i, color.r, color.g, color.b);
-            colors.setXYZ(i + 1, color.r, color.g, color.b);
-            colors.setXYZ(i + 2, color.r, color.g, color.b);
-        }
 
-        const material = new THREE.MeshBasicMaterial({
-            color: 0xffffff,
-            vertexColors: true
-        });
-        const wireframeMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true, transparent: true });
-
-        const mesh = new THREE.Mesh(geometry, material);
-        const wireframe = new THREE.Mesh(geometry, wireframeMaterial);
-        mesh.add(wireframe);
-
-        return mesh;
-    };
 
 
 
@@ -122,35 +79,7 @@ const Terrain = (props) => {
 
 
     const lineGeometry = new THREE.BufferGeometry().setFromPoints(new Float32Array(4 * 3), 3);
-    const cube = getCube();
-
-
-    // useEffect(() => {
-    //     const computeDist = () => {
-    //         const geometry = mesh.current.geometry;
-    //         const count = geometry.attributes.position.count;
-    //         const a = np.zeros([count / 3, count / 3]);
-
-    //         const positions = geometry.attributes.position.array;
-    //         for (let i = 0; i < count; i += 3) {
-    //             for (let j = 0; j < count; j += 3) {
-    //                 const xi = positions[i];
-    //                 const yi = positions[i + 1];
-    //                 const zi = positions[i + 2];
-    //                 const xj = positions[j];
-    //                 const yj = positions[j + 1];
-    //                 const zj = positions[j + 2];
-    //                 const dist = Math.sqrt((xi - xj) ** 2 + (yi - yj) ** 2 + (zi - zj) ** 2);
-    //                 a.set(i / 3, j / 3, dist);
-    //             }
-    //         }
-    //         return a;
-    //     };
-
-    //     const distances = computeDist();
-    //     console.log("" + distances);
-    // }, []);
-
+    const plane = coloredPlane(NB_VERTICES);
 
     return (
         <group>
@@ -167,7 +96,7 @@ const Terrain = (props) => {
                     document.getElementById('root').classList.remove('cursor-grabbing');
                     isIn.current = false;
                 }}
-                object={cube}
+                object={plane}
             />
 
 
@@ -180,11 +109,6 @@ const Terrain = (props) => {
                     transparent={true}
                 />
             </line>
-
-            <mesh ref={cls} visible={false}>
-                <sphereBufferGeometry args={[0.3]} />
-            </mesh>
-
         </group >
     );
 };
