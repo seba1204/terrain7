@@ -2,10 +2,13 @@ import { extend, useFrame, useThree } from "@react-three/fiber";
 import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import buttonCodes from "../../constants/buttonCodes.json";
+import keyCodes from "../../constants/keyCodes.json";
+import ControlContext from "./ControlContext";
 extend({ OrbitControls });
 
 
-const Controls = () => {
+const Controls = ({ keys, buttons }) => {
     // boolean state variable to enable/disable the orbit controls
     const {
         camera,
@@ -41,6 +44,7 @@ const Controls = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    const canPan = () => keys.includes(keyCodes.shift) && buttons.includes(buttonCodes.middle);
 
     return (
         <orbitControls
@@ -48,7 +52,7 @@ const Controls = () => {
             args={[camera, domElement]}
             enableZoom={true}
             enableRotate={true}
-            enablePan={false}
+            enablePan={canPan}
             maxAzimuthAngle={Math.PI / 4}
             maxPolarAngle={Math.PI}
             minAzimuthAngle={-Math.PI / 4}
@@ -66,4 +70,13 @@ const Controls = () => {
 
 };
 
-export default Controls;
+const ControledControls = () => (
+    <ControlContext.Consumer>
+        {({ keys, buttons }) => (
+            <Controls keys={keys} buttons={buttons} />
+        )}
+    </ControlContext.Consumer>
+);
+
+
+export default ControledControls;
