@@ -14,6 +14,8 @@ const Terrain = (props) => {
     const cls = useRef();
 
     const onPointerHover = (e) => {
+        if (e.nativeEvent.buttons === 4) return;
+
         const nV = applyCurrentTool(e, mesh, { ...props });
 
         if (!nV) return;
