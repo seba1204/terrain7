@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { flatColors } from '../../../../constants/colors';
 
+const MAX_BUFFER_TRIANGLES = 100 * 100 * 2;
 
 /**
  * Generate a plane of nbVert * nbVert vertices with colors
@@ -20,8 +21,9 @@ const generateColoredPlane = (nbCote, size) => {
 
     const geometry = new THREE.BufferGeometry();
 
-    const positions = [];
-    const colors = [];
+    // 3 points per triangle * 3 coords per point
+    const positions = Array(MAX_BUFFER_TRIANGLES * 3 * 3).fill(0);
+    const colors = Array(MAX_BUFFER_TRIANGLES * 3 * 3).fill(0);
 
     let color, x, y;
 
@@ -38,6 +40,8 @@ const generateColoredPlane = (nbCote, size) => {
         ]
     ];
 
+    let index = 0;
+
     for (let row = 0; row < rowNb; row++) {
         for (let col = 0; col < colNb; col++) {
             color = new THREE.Color(getColor(flatColors, 'wetAsphalt'));
@@ -46,13 +50,15 @@ const generateColoredPlane = (nbCote, size) => {
                     x = row + coef[parity][0][vertNb];
                     y = col + coef[parity][1][vertNb];
 
-                    positions.push(width / rowNb * x);
-                    positions.push(height / colNb * y);
-                    positions.push(0);
-                    colors.push(color.r * 255);
-                    colors.push(color.g * 255);
-                    colors.push(color.b * 255);
+                    positions[index] = (width / rowNb * x);
+                    positions[index + 1] = (height / colNb * y);
+                    positions[index + 2] = (0);
 
+                    colors[index] = (color.r * 255);
+                    colors[index + 1] = (color.g * 255);
+                    colors[index + 2] = (color.b * 255);
+
+                    index += 3;
                 }
             }
 
