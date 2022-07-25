@@ -1,20 +1,20 @@
 // import { useTexture } from "@react-three/drei";
 import React, { useMemo, useRef } from "react";
+import { flatColors } from "../../../constants/colors";
 import { ControlContext } from "../../Controls";
 import { applyCurrentTool, coloredPlane } from './helpers';
 
+import * as THREE from 'three';
 
-import { flatColors } from "../../../constants/colors";
-
-const Terrain = ({ terrainSize, currentTool }) => {
-    const NB_VERTICES = terrainSize;
+const Terrain = (props) => {
+    const { wireFrame } = props;
+    const NB_VERTICES = props.terrainSize;
 
     const mesh = useRef();
     const cls = useRef();
 
     const onPointerHover = (e) => {
-
-        const nV = applyCurrentTool(currentTool, e, mesh);
+        const nV = applyCurrentTool(e, mesh, { ...props });
 
         if (!nV) return;
         cls.current.position.copy(mesh.current.localToWorld(nV));
@@ -23,10 +23,27 @@ const Terrain = ({ terrainSize, currentTool }) => {
     };
 
     const onPointerDown = (e) => {
-        applyCurrentTool(currentTool, e, mesh);
+        applyCurrentTool(e, mesh, { ...props });
     };
 
-    const plane = useMemo(() => coloredPlane(NB_VERTICES, 20), [NB_VERTICES]);
+    const planeGeo = useMemo(() => coloredPlane(NB_VERTICES, 20), [NB_VERTICES]);
+    const plane = useMemo(() => {
+        const mat1 = new THREE.MeshBasicMaterial({
+            color: 0xffffff,
+            vertexColors: true,
+            side: THREE.DoubleSide,
+        });
+        const mesh = new THREE.Mesh(planeGeo, mat1);
+        if (wireFrame) {
+            const mat2 = new THREE.MeshBasicMaterial({
+                color: flatColors.clouds,
+                wireframe: true,
+                transparent: true
+            });
+            mesh.add(new THREE.Mesh(planeGeo, mat2));
+        }
+        return mesh;
+    }, [planeGeo, wireFrame]);
     return (
         <group>
             <primitive ref={mesh}

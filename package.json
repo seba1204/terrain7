@@ -46,6 +46,7 @@
   "dependencies": {
     "@react-three/drei": "^9.13.1",
     "@react-three/fiber": "^8.0.26",
+    "multiselect-react-dropdown": "^2.0.25",
     "numjs": "^0.16.1",
     "path-browserify": "^1.0.1",
     "prop-types": "^15.8.1",

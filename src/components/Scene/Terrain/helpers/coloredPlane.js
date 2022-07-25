@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { flatColors } from '../../../../constants/colors';
 
-const MAX_BUFFER_TRIANGLES = 100 * 100 * 2;
+const MAX_BUFFER_TRIANGLES = 200 * 200 * 2;
 
 /**
  * Generate a plane of nbVert * nbVert vertices with colors
@@ -71,25 +71,9 @@ const generateColoredPlane = (nbCote, size) => {
 
     geometry.setAttribute('position', positionAttribute);
     geometry.setAttribute('color', colorAttribute);
-
-    const material = new THREE.MeshBasicMaterial({
-        color: 0xffffff,
-        vertexColors: true,
-        side: THREE.DoubleSide,
-    });
     geometry.setDrawRange(0, vertexCount);
-    const mesh = new THREE.Mesh(geometry, material);
 
-    // display wireframe over the plane
-    const wireframeMaterial = new THREE.MeshBasicMaterial({
-        color: flatColors.clouds,
-        wireframe: true,
-        transparent: true
-    });
-    const wireframe = new THREE.Mesh(geometry, wireframeMaterial);
-    mesh.add(wireframe);
-
-    return mesh;
+    return geometry;
 };
 
 

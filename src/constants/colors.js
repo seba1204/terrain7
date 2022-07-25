@@ -5,6 +5,7 @@ const textureColors = {
     sand: 0xf1c40f,
     rock: 0xe74c3c,
     snow: 0xecf0f1,
+    water: 0x3498db
 };
 
 const flatColors = {
