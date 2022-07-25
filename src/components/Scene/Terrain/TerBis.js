@@ -1,5 +1,4 @@
 const meshPosition = mesh.current.geometry.attributes.position;
-console.log(meshPosition.array);
 const linePosition = line.current.geometry.attributes.position;
 const { face, shiftKey, nativeEvent } = e;
 let vertices = [
