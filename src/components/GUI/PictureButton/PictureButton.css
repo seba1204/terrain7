@@ -1,0 +1,19 @@
+.PictureButton {
+  padding: 6px 5px 5px 5px;
+}
+
+.button {
+  height: 100%;
+  width: 100%;
+  padding: 5px;
+  margin: 0;
+  border: 0;
+  background-color: rgba(46, 204, 113, 0);
+  color: #ecf0f1;
+  border-radius: 5px;
+}
+
+.button:hover {
+  cursor: pointer;
+  filter: brightness(50%);
+}

@@ -13,7 +13,7 @@ A three-js terrain editor.
 ## Screenshots
 
 <p align="center">
-  <img src="docs/assets/screenshots/screenshot-22-06-24.png" />
+  <img src="docs/assets/screenshots/screenshot-22-07-25.png" />
 </p>
 
 ## Context

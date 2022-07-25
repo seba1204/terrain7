@@ -1,0 +1,12 @@
+.stats {
+    position: fixed;
+    bottom: 10px !important;
+    right: 10px !important;
+    top: auto !important;
+    left: auto !important;
+}
+
+.stats canvas {
+    width: 120px !important;
+    height: 72px !important;
+}

@@ -1,0 +1,12 @@
+{
+    "sculptSize": 40,
+    "sculptIntensity": 20,
+    "textureSize": 25,
+    "paintIntensity": 20,
+    "terrainSize": 70,
+    "wireFrame": true,
+    "currentTool": "SCULPTURE",
+    "currentTexture": "Sable",
+    "currentSculpture": "Gaussien",
+    "showStats": true
+}
