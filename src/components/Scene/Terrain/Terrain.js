@@ -1,50 +1,32 @@
 // import { useTexture } from "@react-three/drei";
-import React, { useRef } from "react";
-import buttonCodes from "../../../constants/buttonCodes.json";
-import keyCodes from "../../../constants/keyCodes.json";
-import { toolsName } from '../../../constants/tools';
+import React, { useMemo, useRef } from "react";
 import { ControlContext } from "../../Controls";
-import { coloredPlane, getNearestVertex } from './helpers';
+import { applyCurrentTool, coloredPlane } from './helpers';
+
 
 import { flatColors } from "../../../constants/colors";
 
-const Terrain = ({ terrainSize, currentTool, keys, buttons }) => {
+const Terrain = ({ terrainSize, currentTool }) => {
     const NB_VERTICES = terrainSize;
 
     const mesh = useRef();
     const cls = useRef();
 
-
-
     const onPointerHover = (e) => {
-        const nV = getNearestVertex(mesh, e);
-        if (nV) {
-            cls.current.position.copy(mesh.current.localToWorld(nV));
-        }
-    };
 
-    const cannotEdit = () => keys.includes(keyCodes.shift) && buttons.includes(buttonCodes.middle);
+        const nV = applyCurrentTool(currentTool, e, mesh);
+
+        if (!nV) return;
+        cls.current.position.copy(mesh.current.localToWorld(nV));
+
+
+    };
 
     const onPointerDown = (e) => {
-        if (cannotEdit()) return;
-
-        const nV = getNearestVertex(mesh, e);
-
-        switch (currentTool) {
-            case toolsName.sculpt:
-                if (!nV) return;
-
-
-                break;
-
-            default:
-                break;
-        }
-
+        applyCurrentTool(currentTool, e, mesh);
     };
 
-    const plane = coloredPlane(NB_VERTICES, 20);
-
+    const plane = useMemo(() => coloredPlane(NB_VERTICES, 20), [NB_VERTICES]);
     return (
         <group>
             <primitive ref={mesh}
