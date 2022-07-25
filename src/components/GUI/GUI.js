@@ -51,7 +51,6 @@ const GUI = (props) => {
             </Pane>
             <Pane icon={<Icon.Layers />} title="Texturer">
                 {SilderP("Taille", "textureSize")}
-                {SilderP("Intensité", "textureIntensity")}
                 <div className="tools">
                     {displaySelector(textures, "currentTexture")}
                 </div>

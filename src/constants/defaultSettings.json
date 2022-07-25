@@ -3,7 +3,6 @@
     "sculptIntensity": 20,
     "textureSize": 25,
     "paintIntensity": 20,
-    "textureIntensity": 50,
     "terrainSize": 70,
     "wireFrame": true,
     "currentTool": "SCULPTURE",
