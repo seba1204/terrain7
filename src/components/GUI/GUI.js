@@ -16,6 +16,7 @@ const GUI = (props) => {
     const displayTools = () => tools.map(({ name, icon }) => (
         <SelectButton
             key={name}
+            keyName={name}
             image={icon}
             enabled={settings.currentTool === name}
             onClick={() => onSettingChange({ currentTool: name })}

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 
 import './PictureButton.css';
@@ -11,11 +10,6 @@ const PictureButton = (props) => {
       </button>
     </div >
   );
-};
-PictureButton.propTypes = {
-  onClick: PropTypes.func.isRequired,
-  enabled: PropTypes.bool.optional,
-  image: PropTypes.object.isRequired
 };
 
 export default PictureButton;

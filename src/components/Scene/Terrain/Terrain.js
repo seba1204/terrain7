@@ -1,11 +1,14 @@
 // import { useTexture } from "@react-three/drei";
 import React, { useRef } from "react";
+import buttonCodes from "../../../constants/buttonCodes.json";
+import keyCodes from "../../../constants/keyCodes.json";
+import { toolsName } from '../../../constants/tools';
+import { ControlContext } from "../../Controls";
 import { coloredPlane, getNearestVertex } from './helpers';
 
 import { flatColors } from "../../../constants/colors";
 
-const Terrain = (props) => {
-    const { terrainSize } = props;
+const Terrain = ({ terrainSize, currentTool, keys, buttons }) => {
     const NB_VERTICES = terrainSize;
 
     const mesh = useRef();
@@ -20,9 +23,24 @@ const Terrain = (props) => {
         }
     };
 
+    const cannotEdit = () => keys.includes(keyCodes.shift) && buttons.includes(buttonCodes.middle);
+
     const onPointerDown = (e) => {
+        if (cannotEdit()) return;
+
         const nV = getNearestVertex(mesh, e);
-        console.log(`x: ${nV.x}, y: ${nV.y}, z: ${nV.z}`);
+
+        switch (currentTool) {
+            case toolsName.sculpt:
+                if (!nV) return;
+
+
+                break;
+
+            default:
+                break;
+        }
+
     };
 
     const plane = coloredPlane(NB_VERTICES, 20);
@@ -44,5 +62,13 @@ const Terrain = (props) => {
     );
 };
 
-export default Terrain;
+const ControledTerrain = (props) => (
+    <ControlContext.Consumer>
+        {({ keys, buttons }) => (
+            <Terrain keys={keys} buttons={buttons} {...props} />
+        )}
+    </ControlContext.Consumer>
+);
+
+export default ControledTerrain;
 

@@ -5,12 +5,12 @@ import PictureButton from '../PictureButton';
 
 import './SelectButton.css';
 
-const SelectButton = ({ key, image, enabled, onClick }) => (
+const SelectButton = ({ keyName, image, enabled, onClick }) => (
     <PictureButton
         image={image}
-        title={key}
+        title={keyName}
         enabled={enabled}
-        onClick={() => onClick(key)}
+        onClick={() => onClick(keyName)}
     />
 );
 

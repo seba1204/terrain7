@@ -5,6 +5,7 @@ import Controls, { ControlContext } from "./components/Controls";
 import GUI from "./components/GUI";
 import Scene from "./components/Scene";
 
+
 import defaultSettings from "./constants/defaultSettings.json";
 
 const App = () => {
