@@ -4,9 +4,10 @@
     "textureSize": 25,
     "paintIntensity": 20,
     "terrainSize": 70,
-    "wireFrame": true,
-    "currentTool": "SCULPTURE",
-    "currentTexture": "Sable",
+    "wireFrame": false,
+    "currentTool": "TEXTURE",
+    "currentTexture": "Herbe",
     "currentSculpture": "Gaussien",
-    "showStats": true
+    "showStats": true,
+    "showTexture": true
 }

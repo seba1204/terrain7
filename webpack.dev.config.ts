@@ -44,6 +44,10 @@ const config: Configuration = {
                 test: /\.(fbx|gltf)$/i,
                 use: 'file-loader',
             },
+            {
+                test: /\.glsl$/i,
+                loader: 'webpack-glsl-loader',
+            },
         ],
     },
     resolve: {

@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { flatColors } from '../../../../constants/colors';
+import { textureColors } from '../../../../constants/colors';
 
 const MAX_BUFFER_TRIANGLES = 200 * 200 * 2;
 
@@ -44,7 +44,7 @@ const generateColoredPlane = (nbCote, size) => {
 
     for (let row = 0; row < rowNb; row++) {
         for (let col = 0; col < colNb; col++) {
-            color = new THREE.Color(getColor(flatColors, 'wetAsphalt'));
+            color = new THREE.Color(getColor(textureColors, 'sand'));
             for (let parity = 0; parity < 2; parity++) {
                 for (let vertNb = 0; vertNb < 3; vertNb++) {
                     x = row + coef[parity][0][vertNb];

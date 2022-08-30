@@ -1,13 +1,23 @@
-// import { useTexture } from "@react-three/drei";
+import { useTexture } from "@react-three/drei";
 import React, { useMemo, useRef } from "react";
 import { flatColors } from "../../../constants/colors";
 import { ControlContext } from "../../Controls";
 import { applyCurrentTool, coloredPlane } from './helpers';
+import fragmentShader from "./shaders/fragmentShader.glsl";
+import vertexShader from "./shaders/vertexShader.glsl";
+
+
+import dirt from '../../../assets/textures/dirt-512.jpg';
+import grass from '../../../assets/textures/grass-512.jpg';
+import heightmap from '../../../assets/textures/heightmap.png';
+import rock from '../../../assets/textures/rock-512.jpg';
+import sand from '../../../assets/textures/sand-512.jpg';
+import snow from '../../../assets/textures/snow-512.jpg';
 
 import * as THREE from 'three';
 
 const Terrain = (props) => {
-    const { wireFrame } = props;
+    const { wireFrame, showTexture } = props;
     const NB_VERTICES = props.terrainSize;
 
     const mesh = useRef();
@@ -28,24 +38,75 @@ const Terrain = (props) => {
         applyCurrentTool(e, mesh, { ...props });
     };
 
+
+    const textures = [
+        heightmap,
+        dirt,
+        sand,
+        grass,
+        rock,
+        snow,
+    ];
+    const texturesL = useTexture(textures);
+
     const planeGeo = useMemo(() => coloredPlane(NB_VERTICES, 20), [NB_VERTICES]);
     const plane = useMemo(() => {
-        const mat1 = new THREE.MeshBasicMaterial({
-            color: 0xffffff,
-            vertexColors: true,
-            side: THREE.DoubleSide,
-        });
-        const mesh = new THREE.Mesh(planeGeo, mat1);
+        let mat;
+        if (showTexture) {
+            if (texturesL) {
+                texturesL.map(t => {
+                    t.wrapS = t.wrapT = THREE.RepeatWrapping;
+                    t.repeat.set(10, 10);
+                    t.anisotropy = 100;
+                });
+            }
+            // magnitude of normal displacement
+            const bumpScale = 200.0;
+
+            const data = {
+                uniforms: {
+                    bumpTexture: { type: "t", value: texturesL[0] },
+                    bumpScale: { type: "f", value: bumpScale },
+                    oceanTexture: { type: "t", value: texturesL[1] },
+                    sandyTexture: { type: "t", value: texturesL[2] },
+                    grassTexture: { type: "t", value: texturesL[3] },
+                    rockyTexture: { type: "t", value: texturesL[4] },
+                    snowyTexture: { type: "t", value: texturesL[5] },
+                },
+                fragmentShader,
+                vertexShader
+            };
+            mat = new THREE.ShaderMaterial({
+                side: THREE.DoubleSide,
+                ...data
+            });
+        } else {
+            mat = new THREE.MeshBasicMaterial({
+                color: 0xffffff,
+                vertexColors: true,
+                side: THREE.DoubleSide,
+            });
+        }
+
+        const mesh = new THREE.Mesh(planeGeo, mat);
         if (wireFrame) {
             const mat2 = new THREE.MeshBasicMaterial({
-                color: flatColors.clouds,
+                color: flatColors.wetAsphalt,
                 wireframe: true,
                 transparent: true
             });
             mesh.add(new THREE.Mesh(planeGeo, mat2));
         }
+
+
         return mesh;
-    }, [planeGeo, wireFrame]);
+
+
+    }, [planeGeo, wireFrame, texturesL, showTexture]);
+
+
+
+
     return (
         <group>
             <primitive ref={mesh}

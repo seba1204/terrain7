@@ -59,6 +59,7 @@ const GUI = (props) => {
             <Pane icon={<Icon.Settings />} title="Paramètres" >
                 {SilderP("Taille", "terrainSize")}
                 {CheckBoxP("Wireframe", "wireFrame")}
+                {CheckBoxP("Textures", "showTexture")}
                 {CheckBoxP("Stats", "showStats")}
             </Pane>
         </div>

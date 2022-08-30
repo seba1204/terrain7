@@ -56,17 +56,6 @@ const findNeighbors = (mesh, vertex, selectorSize, terrainSize) => {
 };
 const relative = (i, abs) => i / (Math.log(abs));
 
-// const findNeighborsFaces = (mesh, vertex, selectorSize) => {
-//     const neighbors = [];
-//     for (let i = 0; i < mesh.length / 3; i += 3) {
-//         const tempVertex = new THREE.Vector3(mesh[i], mesh[i + 1], mesh[i + 2]);
-//         const dist = computeDist(tempVertex, vertex);
-//         if (dist < selectorSize) {
-//             neighbors.push({ ind: i, dist });
-//         }
-//     }
-//     return neighbors;
-// };
 
 const computeDist = (a, b) => {
     return Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));

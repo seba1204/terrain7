@@ -30,3 +30,16 @@ body {
 .content {
     flex-grow: 5;
 }
+
+.overallCan {
+    position: absolute;
+    z-index: 9999;
+    top: 10px;
+    right: 10px;
+    width: 300px;
+    height: 300px;
+    border-radius: 5px;
+    border: #1D2935 solid 1px;
+    background: #2c3e50;
+
+}
