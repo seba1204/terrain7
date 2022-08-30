@@ -6,12 +6,12 @@ import { applyCurrentTool, coloredPlane } from './helpers';
 import fragmentShader from "./shaders/fragmentShader.glsl";
 import vertexShader from "./shaders/vertexShader.glsl";
 
-import dirt from '../../../assets/textures/pack-1/dirt.jpg';
 import grass from '../../../assets/textures/pack-1/grass.jpg';
 import heightmap from '../../../assets/textures/pack-1/heightmap.png';
 import rock from '../../../assets/textures/pack-1/rock.jpg';
 import sand from '../../../assets/textures/pack-1/sand.jpg';
 import snow from '../../../assets/textures/pack-1/snow.jpg';
+import water from '../../../assets/textures/pack-1/water.jpg';
 
 import * as THREE from 'three';
 
@@ -40,7 +40,7 @@ const Terrain = (props) => {
 
     const textures = [
         heightmap,
-        dirt,
+        water,
         sand,
         grass,
         rock,
@@ -55,16 +55,13 @@ const Terrain = (props) => {
             if (texturesL) {
                 texturesL.map(t => {
                     t.wrapS = t.wrapT = THREE.RepeatWrapping;
-                    t.repeat.set(20, 20);
-                    t.anisotropy = 200;
+                    t.repeat.set(1, 1);
+                    t.anisotropy = 100;
                 });
             }
             // magnitude of normal displacement
-            const bumpScale = 200.0;
             const data = {
                 uniforms: {
-                    bumpTexture: { type: "t", value: texturesL[0] },
-                    bumpScale: { type: "f", value: bumpScale },
                     oceanTexture: { type: "t", value: texturesL[1] },
                     sandyTexture: { type: "t", value: texturesL[2] },
                     grassTexture: { type: "t", value: texturesL[3] },

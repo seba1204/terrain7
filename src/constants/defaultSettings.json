@@ -4,10 +4,10 @@
     "textureSize": 25,
     "paintIntensity": 20,
     "terrainSize": 70,
-    "wireFrame": false,
+    "wireFrame": true,
     "currentTool": "TEXTURE",
     "currentTexture": "Herbe",
     "currentSculpture": "Gaussien",
     "showStats": true,
-    "showTexture": true
+    "showTexture": false
 }
