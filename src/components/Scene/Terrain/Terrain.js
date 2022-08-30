@@ -6,13 +6,12 @@ import { applyCurrentTool, coloredPlane } from './helpers';
 import fragmentShader from "./shaders/fragmentShader.glsl";
 import vertexShader from "./shaders/vertexShader.glsl";
 
-
-import dirt from '../../../assets/textures/dirt-512.jpg';
-import grass from '../../../assets/textures/grass-512.jpg';
-import heightmap from '../../../assets/textures/heightmap.png';
-import rock from '../../../assets/textures/rock-512.jpg';
-import sand from '../../../assets/textures/sand-512.jpg';
-import snow from '../../../assets/textures/snow-512.jpg';
+import dirt from '../../../assets/textures/pack-1/dirt.jpg';
+import grass from '../../../assets/textures/pack-1/grass.jpg';
+import heightmap from '../../../assets/textures/pack-1/heightmap.png';
+import rock from '../../../assets/textures/pack-1/rock.jpg';
+import sand from '../../../assets/textures/pack-1/sand.jpg';
+import snow from '../../../assets/textures/pack-1/snow.jpg';
 
 import * as THREE from 'three';
 
@@ -56,8 +55,8 @@ const Terrain = (props) => {
             if (texturesL) {
                 texturesL.map(t => {
                     t.wrapS = t.wrapT = THREE.RepeatWrapping;
-                    t.repeat.set(10, 10);
-                    t.anisotropy = 100;
+                    t.repeat.set(20, 20);
+                    t.anisotropy = 200;
                 });
             }
             // magnitude of normal displacement
