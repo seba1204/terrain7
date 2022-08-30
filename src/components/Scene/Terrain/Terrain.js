@@ -62,7 +62,6 @@ const Terrain = (props) => {
             }
             // magnitude of normal displacement
             const bumpScale = 200.0;
-
             const data = {
                 uniforms: {
                     bumpTexture: { type: "t", value: texturesL[0] },

@@ -72,7 +72,6 @@ const generateColoredPlane = (nbCote, size) => {
     geometry.setAttribute('position', positionAttribute);
     geometry.setAttribute('color', colorAttribute);
     geometry.setDrawRange(0, vertexCount);
-
     return geometry;
 };
 

@@ -1,3 +1,4 @@
+uniform sampler2D bumpTexture;
 uniform sampler2D oceanTexture;
 uniform sampler2D sandyTexture;
 uniform sampler2D grassTexture;
@@ -6,6 +7,7 @@ uniform sampler2D snowyTexture;
 
 varying vec2 vUV;
 varying vec3 vNormal;
+varying vec4 vPosition;
 
 varying float vAmount;
 
@@ -15,5 +17,7 @@ void main() {
     vec4 grass = (smoothstep(0.28, 0.32, vAmount) - smoothstep(0.35, 0.40, vAmount)) * texture2D(grassTexture, vUV * 20.0);
     vec4 rocky = (smoothstep(0.30, 0.50, vAmount) - smoothstep(0.40, 0.70, vAmount)) * texture2D(rockyTexture, vUV * 20.0);
     vec4 snowy = (smoothstep(0.50, 0.65, vAmount)) * texture2D(snowyTexture, vUV * 10.0);
-    gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+    // gl_FragColor = texture2D(bumpTexture, vUV);
+    gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0) + water + sandy + grass + rocky + snowy;
+    ;
 }

@@ -4,11 +4,13 @@ uniform float bumpScale;
 varying float vAmount;
 varying vec2 vUV;
 varying vec3 vNormal;
+varying vec4 vPosition;
 
 void main() {
-	vUV = uv;
+	vPosition = vec4(position, 1.0) / 10.0;
+	vUV = vec2(vPosition.y, vPosition.x);
 	vNormal = normal;
-	vec4 bumpData = texture2D(bumpTexture, uv);
+	vec4 bumpData = texture2D(bumpTexture, vUV);
 
 	vAmount = bumpData.r; // assuming map is grayscale it doesn't matter if you use r, g, or b.
 
