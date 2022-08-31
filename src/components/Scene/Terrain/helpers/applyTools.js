@@ -1,5 +1,6 @@
 
 import * as THREE from 'three';
+import buttonCodes from '../../../../constants/buttonCodes.json';
 import sculptures from '../../../../constants/sculptures';
 import textures from '../../../../constants/textures';
 import { toolsName } from '../../../../constants/tools';
@@ -10,7 +11,11 @@ const applyCurrentTool = (e, mesh, props) => {
     const nV = getNearestVertex(mesh, e);
 
     if (!nV) return null;
-    if (e.nativeEvent.buttons !== 1) return nV;
+    if (e.nativeEvent.buttons !== buttonCodes.middle) {
+        // const positions = mesh.current.geometry.attributes.position.array.slice(terrainSize * terrainSize * 2 * 3);
+        return nV;
+    }
+    if (e.nativeEvent.buttons !== buttonCodes.left) return nV;
     const meshPosition = mesh.current.geometry.attributes.position.array;
     let neighbors = [];
     switch (currentTool) {
@@ -31,15 +36,6 @@ const applyCurrentTool = (e, mesh, props) => {
                     }
                 }
             });
-            // const { face } = e;
-            // let vertices = [face.a, face.b, face.c];
-            // if (vertices.length > 0) {
-            //     vertices.map(f => {
-            //         meshColor[f * 3] = col.r * 255;
-            //         meshColor[f * 3 + 1] = col.g * 255;
-            //         meshColor[f * 3 + 2] = col.b * 255;
-            //     });
-            // }
             mesh.current.geometry.attributes.color.needsUpdate = true;
             break;
         case toolsName.sculpt:
