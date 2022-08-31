@@ -11,9 +11,6 @@ const applyCurrentTool = (e, mesh, props) => {
     const nV = getNearestVertex(mesh, e);
 
     if (!nV) return null;
-    if (e.nativeEvent.buttons !== buttonCodes.middle) {
-        return nV;
-    }
     if (e.nativeEvent.buttons !== buttonCodes.left) return nV;
     const meshPosition = mesh.current.geometry.attributes.position.array;
     let neighbors = [];
