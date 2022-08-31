@@ -1,17 +1,16 @@
 import { useTexture } from "@react-three/drei";
 import React, { useMemo, useRef } from "react";
-import { flatColors } from "../../../constants/colors";
-import { ControlContext } from "../../Controls";
-import { applyCurrentTool, coloredPlane } from './helpers';
-import fragmentShader from "./shaders/fragmentShader.glsl";
-import vertexShader from "./shaders/vertexShader.glsl";
-
 import grass from '../../../assets/textures/pack-1/grass.jpg';
 import heightmap from '../../../assets/textures/pack-1/heightmap.png';
 import rock from '../../../assets/textures/pack-1/rock.jpg';
 import sand from '../../../assets/textures/pack-1/sand.jpg';
 import snow from '../../../assets/textures/pack-1/snow.jpg';
 import water from '../../../assets/textures/pack-1/water.jpg';
+import { flatColors } from "../../../constants/colors";
+import { ControlContext } from "../../Controls";
+import { applyCurrentTool, coloredPlane } from './helpers';
+import fragmentShader from "./shaders/fragmentShader.glsl";
+import vertexShader from "./shaders/vertexShader.glsl";
 
 import * as THREE from 'three';
 

@@ -49,6 +49,9 @@ const App = () => {
     return (
         <div className="container">
             <div className="body">
+                {/* <div className="toolbar panel">
+                    <ToolBar />
+                </div> */}
                 <div className="sidebar panel">
                     <GUI
                         onSettingChange={updateSettings}
