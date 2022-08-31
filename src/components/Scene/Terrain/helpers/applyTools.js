@@ -6,7 +6,7 @@ import { toolsName } from '../../../../constants/tools';
 import getNearestVertex from './getNearestVertex';
 
 const applyCurrentTool = (e, mesh, props) => {
-    const { currentTool, currentTexture, currentSculpture, sculptIntensity, terrainSize, sculptSize, textureSize } = props;
+    const { currentTool, currentSculpture, currentTexture, sculptIntensity, terrainSize, sculptSize, textureSize } = props;
     const nV = getNearestVertex(mesh, e);
 
     if (!nV) return null;
@@ -15,14 +15,31 @@ const applyCurrentTool = (e, mesh, props) => {
     let neighbors = [];
     switch (currentTool) {
         case toolsName.text:
+            // find neighbors (the central point is included)
             neighbors = findNeighbors(meshPosition, nV, relative(textureSize / 10, terrainSize), terrainSize);
             const col = new THREE.Color(textures.filter(t => t.name === currentTexture)[0].color);
             const meshColor = mesh.current.geometry.attributes.color.array;
-            neighbors.forEach(({ ind }) => {
-                meshColor[ind] = col.r * 255;
-                meshColor[ind + 1] = col.g * 255;
-                meshColor[ind + 2] = col.b * 255;
+            neighbors = neighbors.map(n => ({ done: false, ...n }));
+            neighbors.forEach(({ ind, done }) => {
+                if (!done) {
+                    const i = Math.floor(ind / 3);
+                    const starter = i - (i % 3);
+                    for (let j = starter; j < starter + 3; j += 1) {
+                        meshColor[j * 3] = col.r * 255;
+                        meshColor[j * 3 + 1] = col.g * 255;
+                        meshColor[j * 3 + 2] = col.b * 255;
+                    }
+                }
             });
+            // const { face } = e;
+            // let vertices = [face.a, face.b, face.c];
+            // if (vertices.length > 0) {
+            //     vertices.map(f => {
+            //         meshColor[f * 3] = col.r * 255;
+            //         meshColor[f * 3 + 1] = col.g * 255;
+            //         meshColor[f * 3 + 2] = col.b * 255;
+            //     });
+            // }
             mesh.current.geometry.attributes.color.needsUpdate = true;
             break;
         case toolsName.sculpt:

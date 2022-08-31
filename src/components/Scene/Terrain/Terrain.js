@@ -60,8 +60,11 @@ const Terrain = (props) => {
                 });
             }
             // magnitude of normal displacement
+            console.log(planeGeo);
             const data = {
                 uniforms: {
+                    size: { value: 32 },
+                    colors: { value: planeGeo.attributes.color.array.slice(NB_VERTICES) },
                     oceanTexture: { type: "t", value: texturesL[1] },
                     sandyTexture: { type: "t", value: texturesL[2] },
                     grassTexture: { type: "t", value: texturesL[3] },
@@ -97,7 +100,7 @@ const Terrain = (props) => {
         return mesh;
 
 
-    }, [planeGeo, wireFrame, texturesL, showTexture]);
+    }, [planeGeo, wireFrame, texturesL, showTexture, NB_VERTICES]);
 
 
 

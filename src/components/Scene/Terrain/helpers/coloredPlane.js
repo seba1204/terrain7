@@ -24,6 +24,7 @@ const generateColoredPlane = (nbCote, size) => {
     // 3 points per triangle * 3 coords per point
     const positions = Array(MAX_BUFFER_TRIANGLES * 3 * 3).fill(0);
     const colors = Array(MAX_BUFFER_TRIANGLES * 3 * 3).fill(0);
+    const neighbors = Array(MAX_BUFFER_TRIANGLES * 3 * 3).fill(0);
 
     let color, x, y;
 
@@ -58,6 +59,10 @@ const generateColoredPlane = (nbCote, size) => {
                     colors[index + 1] = (color.g * 255);
                     colors[index + 2] = (color.b * 255);
 
+                    neighbors[index] = 0.5;
+                    neighbors[index + 1] = 0.5;
+                    neighbors[index + 2] = 0.5;
+
                     index += 3;
                 }
             }
@@ -66,11 +71,13 @@ const generateColoredPlane = (nbCote, size) => {
     }
     const positionAttribute = new THREE.Float32BufferAttribute(positions, 3);
     const colorAttribute = new THREE.Uint8BufferAttribute(colors, 3);
+    const neighborAttribute = new THREE.Float32BufferAttribute(neighbors, 3);
 
     colorAttribute.normalized = true;
 
     geometry.setAttribute('position', positionAttribute);
     geometry.setAttribute('color', colorAttribute);
+    geometry.setAttribute('uv', neighborAttribute);
     geometry.setDrawRange(0, vertexCount);
     return geometry;
 };
