@@ -12,7 +12,6 @@ const applyCurrentTool = (e, mesh, props) => {
 
     if (!nV) return null;
     if (e.nativeEvent.buttons !== buttonCodes.middle) {
-        // const positions = mesh.current.geometry.attributes.position.array.slice(terrainSize * terrainSize * 2 * 3);
         return nV;
     }
     if (e.nativeEvent.buttons !== buttonCodes.left) return nV;
