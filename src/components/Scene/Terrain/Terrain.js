@@ -59,7 +59,6 @@ const Terrain = (props) => {
                 });
             }
             // magnitude of normal displacement
-            console.log(planeGeo);
             const data = {
                 uniforms: {
                     size: { value: 32 },
@@ -107,7 +106,7 @@ const Terrain = (props) => {
     return (
         <group>
             <primitive ref={mesh}
-                rotation={[-Math.PI / 3, 0, Math.PI / 10]}
+                // rotation={[-Math.PI / 3, 0, Math.PI / 10]}
                 onPointerMove={onPointerHover}
                 onPointerDown={onPointerDown}
                 object={plane}

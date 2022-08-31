@@ -51,8 +51,8 @@ const generateColoredPlane = (nbCote, size) => {
                     x = row + coef[parity][0][vertNb];
                     y = col + coef[parity][1][vertNb];
 
-                    positions[index] = (width / rowNb * x);
-                    positions[index + 1] = (height / colNb * y);
+                    positions[index] = (width / rowNb * x) - (width / 2);
+                    positions[index + 1] = (height / colNb * y) - (height / 2);
                     positions[index + 2] = (0);
 
                     colors[index] = (color.r * 255);

@@ -5,12 +5,13 @@ import Stats from './Stats';
 import Terrain from './Terrain';
 
 
-const Scene = (props) => (
-    <>
+const Scene = (props) => {
+
+    return (<>
         <Lights />
         <Terrain {...props} />
         <Stats {...props} />;
-    </>
-);
+    </>);
+};
 
 export default Scene;

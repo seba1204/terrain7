@@ -44,8 +44,6 @@ const App = () => {
         window.addEventListener("mouseup", removeButton);
     });
 
-
-
     return (
         <div className="container">
             <div className="body">
@@ -60,7 +58,10 @@ const App = () => {
                 </div>
                 <div className="content panel">
                     {/* enable preserveDrawingBuffer for screenshot */}
-                    <Canvas camera={{ zoom: 30, position: [0, 0, 500] }} gl={{ antialias: true, preserveDrawingBuffer: false }}>
+                    <Canvas
+                        camera={{ zoom: 20, position: [0, 0, 300] }}
+                        gl={{ antialias: true, preserveDrawingBuffer: false }}
+                    >
                         <Suspense>
                             <ControlContext.Provider value={{ keys, buttons }}>
                                 <Controls />
