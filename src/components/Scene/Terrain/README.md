@@ -17,6 +17,10 @@ const positions = mesh.current.geometry.attributes.position.array
     .slice(terrainSize * terrainSize * 2 * 3);
 ```
 
+## Basic texture
+
+- <https://github.com/stemkoski/stemkoski.github.com/blob/master/Three.js/Shader-Heightmap-Textures.html>
+
 ## Better texture
 
 See CanvasTexture

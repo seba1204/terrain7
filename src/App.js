@@ -60,7 +60,7 @@ const App = () => {
                     {/* enable preserveDrawingBuffer for screenshot */}
                     <Canvas
                         camera={{ zoom: 20, position: [0, 0, 300] }}
-                        gl={{ antialias: true, preserveDrawingBuffer: false }}
+                        gl={{ antialias: true, preserveDrawingBuffer: true }}
                     >
                         <Suspense>
                             <ControlContext.Provider value={{ keys, buttons }}>

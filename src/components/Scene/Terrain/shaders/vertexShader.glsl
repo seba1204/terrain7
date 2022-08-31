@@ -1,10 +1,9 @@
 attribute vec3 color;
-attribute vec3 neighbor;
 varying vec2 vUV;
-varying vec3 vColor;
+varying float vAmount;
 
 void main() {
 	vUV = vec2(position.y, position.x);
-	vColor = color;
+	vAmount = position.z / 2.0;
 	gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
 }
