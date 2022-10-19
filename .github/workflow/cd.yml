@@ -3,7 +3,7 @@ name: Deploy
 on:
   push:
     branches:
-      - master  # Push to main branch
+      - main  # Push to main branch
       - ci-cd/*
 
 jobs:
